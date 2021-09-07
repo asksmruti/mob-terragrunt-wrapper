@@ -13,7 +13,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/smruti-21/tgwrapper/issues.
+Report bugs at https://github.com/smruti-21/mob-terragrunt-wrapper/issues.
 
 If you are reporting a bug, please include:
 
@@ -43,7 +43,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/smruti-21/tgwrapper/issues.
+The best way to send feedback is to file an issue at https://github.com/smruti-21/mob-terragrunt-wrapper/issues.
 
 If you are proposing a feature:
 
@@ -57,15 +57,15 @@ Get Started!
 
 Ready to contribute? Here's how to set up `tgwrapper` for local development.
 
-1. Fork the `tgwrapper` repo on GitHub.
+1. Fork the `mob-terragrunt-wrapper` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/tgwrapper.git
+    $ git clone git@github.com:smruti-21/mob-terragrunt-wrapper.git
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv tgwrapper
-    $ cd tgwrapper/
+    $ mkvirtualenv mob-terragrunt-wrapper
+    $ cd mob-terragrunt-wrapper/
     $ python setup.py develop
 
 4. Create a branch for local development::
