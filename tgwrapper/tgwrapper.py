@@ -199,7 +199,7 @@ def run_terragrunt(action, config_dir, config_template, env,
 
     # Remove the cache folder
     active_modules_list = get_terragrunt_modules_list()
-    logging.info(f"List of active modules - {active_modules_list}")
+    logging.debug(f"List of active modules - {active_modules_list}")
 
     path_dict = get_path_dict(active_modules_list, terragrunt_modules_path)
     logging.debug(f"Terragrunt module settings - {config_file['terragrunt_modules_settings']}")
@@ -224,7 +224,7 @@ def run_terragrunt(action, config_dir, config_template, env,
         terragrunt_ignore_dirs.append('--terragrunt-exclude-dir')
         terragrunt_ignore_dirs.append(exclude_folder)
 
-    logging.info(f"terragrunt_ignore_dirs - {terragrunt_ignore_dirs}")
+    logging.debug(f"terragrunt_ignore_dirs - {terragrunt_ignore_dirs}")
 
     # Set the environment variable required by the terragrunt
     os.environ["TF_VAR_aws_profile"] = profile
@@ -258,7 +258,7 @@ def main():
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s: %(message)s')
         terraform_args = "--terragrunt-log-level debug --terragrunt-debug"
     else:
-        logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s')
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
     run_terragrunt(action=str(options.action), config_dir=options.config_dir, config_template=options.config_template,
                    env=env, profile=options.profile, region=region, terraform_args=terraform_args,
