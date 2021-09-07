@@ -26,6 +26,13 @@ Terragrunt wrapper for AWS infra deployment
 * Free software: MIT license
 * Documentation(Not ready yet): https://tgwrapper.readthedocs.io
 
+How to install
+--------------
+
+.. code:: bash
+
+    $ pip3 install git+https://github.com/smruti-21/mob-terragrunt-wrapper.git@main
+
 Features
 --------
 
