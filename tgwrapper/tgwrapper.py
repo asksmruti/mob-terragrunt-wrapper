@@ -183,6 +183,7 @@ def run_terragrunt(action, config_dir, config_template, env,
     :return:
     """
     project_root = find_project_dir()
+    logging.info(f"PROJECT_ROOT is set to - {project_root}")
     delete_tg_cache([".terragrunt-cache"])
 
     # Arguments mock
