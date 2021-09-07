@@ -10,8 +10,8 @@ import logging
 from dpath import util
 from collections import defaultdict
 from mergedeep import merge, Strategy
-from jinja2 import Environment, FileSystemLoader, exceptions
 from tgwrapper.tghelper import tghelper
+from jinja2 import Environment, FileSystemLoader, exceptions
 
 
 def find_project_dir():
