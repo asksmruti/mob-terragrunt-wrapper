@@ -16,11 +16,16 @@ from tgwrapper.tghelper import tghelper
 
 def find_project_dir():
     """
-     Find the root of the project based on the location of empty.yaml
-    :return:
+     Find the root of the project
+    :return: Project root directory
     """
     # Depending on the location of current script, change the path
-    project_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # project_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if "PROJECT_ROOT" in os.environ:
+        project_root_dir = os.getenv("PROJECT_ROOT")
+    else:
+        project_root_dir = os.getcwd()
+
     return project_root_dir
 
 
@@ -237,6 +242,8 @@ def run_terragrunt(action, config_dir, config_template, env,
     terragrunt_command = ['terragrunt', action]
     terragrunt_command.extend(terraform_args)
     terragrunt_command.extend(terragrunt_ignore_dirs)
+    # Format the terragrunt hcl file
+    os.system('terragrunt hclfmt')
     os.system(' '.join(terragrunt_command))
 
 
