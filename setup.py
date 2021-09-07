@@ -44,6 +44,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/smruti-21/tgwrapper',
-    version='0.2.0',
+    version='0.1.0',
     zip_safe=False,
 )
