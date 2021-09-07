@@ -6,7 +6,9 @@ def tghelper():
     Helper function
     :return: Arguments
     """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Terragrunt wrapper to deploy the infrastructure in AWS",
+                                     prog="tgwrapper", epilog="Default PROJECT_ROOT is current directory, \
+                                     please set it appropriately where your config dir exists")
     parser.add_argument('--action', '-a', help='Terragrunt action.',
                         choices=["init", "plan", "plan-all", "apply",
                                  "apply-all", "destroy", "output", "hclfmt", "state", "import"], required=True)
