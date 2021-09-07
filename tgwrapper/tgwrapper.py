@@ -26,7 +26,7 @@ def find_project_dir():
     else:
         project_root_dir = os.getcwd()
 
-    return project_root_dir
+    return project_root_dir.rstrip("/")
 
 
 def is_path_exist(*args):
