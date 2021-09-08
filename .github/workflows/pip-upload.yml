@@ -1,0 +1,27 @@
+name: PIP upload - tgwrapper
+
+on:
+  push:
+    branches: [ main ]
+    
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@master
+        
+      - name: Test
+        uses: onichandame/python-test-action@master
+        
+      - name: Upload
+        uses: onichandame/pip-upload-action@master
+        with:
+          username: '__token__'
+          password: ${{ secrets.PIP_PASSWORD }}
