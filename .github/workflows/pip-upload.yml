@@ -31,7 +31,7 @@ jobs:
 #         run: |
 #           python setup.py sdist bdist_wheel
 #           twine upload dist/*
-          
+
       - name: Publish to test pypi
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -39,4 +39,11 @@ jobs:
           user: __token__
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository_url: https://test.pypi.org/legacy/
+          
+      - name: Publish to test PyPI
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PIP_PASSWORD }}
 
