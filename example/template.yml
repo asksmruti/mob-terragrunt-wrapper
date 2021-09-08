@@ -1,0 +1,61 @@
+common_vars:
+  # Classic DTAP
+  allowed_envs: &allowed_envs
+    - networking
+  allowed_regions: &allowed_regions
+    - eu-west-1
+  main_region: &main_region
+    - eu-west-1
+
+common_tags: &common_tags
+  Organization: "KIB"
+  Terraform: "true"
+  InfraRepo: "https://github.com/vmulasmob/blueprint-networking"
+  ManagedBy: "kib-devops@mobiquityinc.com"
+
+
+terragrunt_modules_settings:
+  regional:
+    vpc_squid:
+      networking:
+        repo: "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//?ref=v2.24.0"
+        enable_nat_gateway: false
+        single_nat_gateway: false
+        tags:
+          <<: *common_tags
+
+      transit_gateway_attachment:
+        repo: "git::https://github.com/vmulasmob/terraform_modules.git//transit_gateway_attachment?ref=v0.3"
+        tags:
+          <<: *common_tags
+
+      route_vpc_to_vpc:
+        repo: "git::https://github.com/vmulasmob/terraform_modules.git//route_vpc_to_vpc?ref=v0.3"
+        tags:
+          <<: *common_tags
+
+      vpc_endpoint:
+        repo: "git::https://github.com/clowdhaus/terraform-aws-vpc-endpoints.git//?ref=v1.1.0"
+        tags:
+          <<: *common_tags
+      asg:
+        repo: "git::https://github.com/terraform-aws-modules/terraform-aws-autoscaling.git//?ref=v4.4.0"
+        image_id: "ami-0da7245a9700c7183"
+        instance_type: "t3.medium"
+        tags:
+          <<: *common_tags
+
+      asg_sec_group:
+        repo: "git::https://github.com/terraform-aws-modules/terraform-aws-security-group.git//?ref=v4.3.0"
+        tags:
+          <<: *common_tags
+
+      elbv2:
+        repo: "git::https://github.com/terraform-aws-modules/terraform-aws-alb.git//?ref=v6.3.0"
+        tags:
+          <<: *common_tags
+
+      ad:
+        repo: "git::https://github.com/vmulasmob/terraform_modules.git//ad?ref=v0.3"
+        tags:
+          <<: *common_tags
