@@ -7,7 +7,8 @@ Terragrunt wrapper for AWS infra deployment
   
 ##### Package manager  
 ```shell script  
- $ pip3 install tgwrapper $ pip3 install --upgrade tgwrapper      # To upgrade
+ $ pip3 install tgwrapper 
+ $ pip3 install --upgrade tgwrapper      # To upgrade
  ```  
  
 ### Usage  
