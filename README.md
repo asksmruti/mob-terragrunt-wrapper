@@ -1,4 +1,4 @@
-https://img.shields.io/github/v/release/smruti-21/mob-terragrunt-wrapper) [![PyPI version](https://badge.fury.io/py/tgwrapper.svg)](https://badge.fury.io/py/tgwrapper)   [![Build | Publish](https://github.com/smruti-21/mob-terragrunt-wrapper/actions/workflows/pip-upload.yml/badge.svg)](https://github.com/smruti-21/mob-terragrunt-wrapper/actions/workflows/pip-upload.yml) [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/smruti-21/mob-terragrunt-wrapper) [![PyPI version](https://badge.fury.io/py/tgwrapper.svg)](https://badge.fury.io/py/tgwrapper)   [![Build | Publish](https://github.com/smruti-21/mob-terragrunt-wrapper/actions/workflows/pip-upload.yml/badge.svg)](https://github.com/smruti-21/mob-terragrunt-wrapper/actions/workflows/pip-upload.yml) [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
 
 ## mob-terragrunt-wrapper  
   
