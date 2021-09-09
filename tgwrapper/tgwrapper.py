@@ -154,7 +154,7 @@ def write_config_file(env_override_file, config_template, env, region):
         conf_dict = yaml.safe_load(open(config_template))
         merge(conf_dict['terragrunt_modules_settings'], merged_regional_override_dict)
     except Exception as e:
-        raise SystemExit(e)
+        raise SystemExit(f"Unknown Error - {e}")
 
     logging.debug(f"Merged regional override dict - {merged_regional_override_dict}")
     logging.debug(f"Final config file - {yaml.dump(conf_dict)}")
