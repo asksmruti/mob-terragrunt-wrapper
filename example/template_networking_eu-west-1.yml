@@ -1,7 +1,7 @@
 common_tags:
-  InfraRepo: https://github.com/vmulasmob/blueprint-networking
-  ManagedBy: kib-devops@mobiquityinc.com
-  Organization: KIB
+  InfraRepo: https://github.com/mob/blueprint-networking
+  ManagedBy: "hello@it.com"
+  Organization: MOB
   Terraform: 'true'
 common_vars:
   allowed_envs:
@@ -13,98 +13,14 @@ common_vars:
 terragrunt_modules_settings:
   regional:
     vpc_squid:
-      ad:
-        computer_ou: kib
-        domain_name: non-prod.kib.local
-        repo: git::https://github.com/vmulasmob/terraform_modules.git//ad?ref=v0.3
-        short_name: kib
-        tags:
-          InfraRepo: https://github.com/vmulasmob/blueprint-networking
-          ManagedBy: kib-devops@mobiquityinc.com
-          Name: Active Directory
-          Organization: KIB
-          Terraform: 'true'
-      asg:
-        block_device_mappings:
-        - device_name: /dev/xvda
-          ebs:
-          - delete_on_termination: true
-            encrypted: true
-            volume_size: 20
-            volume_type: gp3
-          no_device: 0
-        - device_name: /dev/sda1
-          ebs:
-          - delete_on_termination: true
-            encrypted: true
-            volume_size: 30
-            volume_type: gp3
-          no_device: 1
-        capacity_reservation_specification:
-          capacity_reservation_preference: open
-        cpu_options:
-          core_count: 1
-          threads_per_core: 1
-        create_lt: true
-        description: squid - Launch template
-        desired_capacity: 1
-        ebs_optimized: true
-        enable_monitoring: true
-        health_check_type: EC2
-        image_id: ami-0da7245a9700c7183
-        initial_lifecycle_hooks:
-        - default_result: CONTINUE
-          heartbeat_timeout: 60
-          lifecycle_transition: autoscaling:EC2_INSTANCE_LAUNCHING
-          name: StartupLifeCycleHook
-        - default_result: CONTINUE
-          heartbeat_timeout: 180
-          lifecycle_transition: autoscaling:EC2_INSTANCE_TERMINATING
-          name: TerminationLifeCycleHook
-        instance_refresh:
-          preferences:
-            min_healthy_percentage: 50
-          strategy: Rolling
-        instance_type: t3.medium
-        key_name: kib-networking
-        lt_name: squid-launch-template
-        max_size: 2
-        min_size: 1
-        name: squid-asg
-        repo: git::https://github.com/terraform-aws-modules/terraform-aws-autoscaling.git//?ref=v4.4.0
-        tags:
-        - Name: squid-asg
-        update_default_version: true
-        use_lt: true
-        wait_for_capacity_timeout: 0
-      asg_sec_group:
-        create: true
-        name: asg-sec-group
-        repo: git::https://github.com/terraform-aws-modules/terraform-aws-security-group.git//?ref=v4.3.0
-        tags:
-          InfraRepo: https://github.com/vmulasmob/blueprint-networking
-          ManagedBy: kib-devops@mobiquityinc.com
-          Name: asg sg squid
-          Organization: KIB
-          Terraform: 'true'
-      elbv2:
-        enable_cross_zone_load_balancing: true
-        internal: true
-        load_balancer_type: network
-        name: LbSquid
-        repo: git::https://github.com/terraform-aws-modules/terraform-aws-alb.git//?ref=v6.3.0
-        tags:
-          InfraRepo: https://github.com/vmulasmob/blueprint-networking
-          ManagedBy: kib-devops@mobiquityinc.com
-          Name: lb squid
-          Organization: KIB
-          Terraform: 'true'
       networking:
+        allowed_envs: *allowed_envs
+        allowed_regions: *allowed_regions
         azs:
         - eu-west-1a
         - eu-west-1b
         - eu-west-1c
-        cidr: 10.70.87.0/24
+        cidr: 10.20.80.0/24
         cidr_prefix: 70
         default_vpc_name: vpc-squid
         enable_dns_hostnames: true
@@ -113,82 +29,32 @@ terragrunt_modules_settings:
         private_subnet_tags:
           Name: vpc-squid-private-subnet
         private_subnets:
-        - 10.70.87.0/27
-        - 10.70.87.32/27
-        - 10.70.87.64/27
+        - 10.20.80.0/27
+        - 10.20.80.32/27
+        - 10.20.80.64/27
         public_subnet_tags:
           Name: vpc-squid-public-subnet
         public_subnets:
-        - 10.70.87.96/27
-        - 10.70.87.128/27
-        - 10.70.87.160/27
+        - 10.20.80.96/27
+        - 10.20.80.128/27
+        - 10.20.80.160/27
         repo: git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//?ref=v2.24.0
         single_nat_gateway: true
         tags:
-          InfraRepo: https://github.com/vmulasmob/blueprint-networking
-          ManagedBy: kib-devops@mobiquityinc.com
+          InfraRepo: https://github.com/mob/blueprint-networking
+          ManagedBy: hello@it.com
           Name: vpc-squid
-          Organization: KIB
+          Organization: MOB
           Terraform: 'true'
-      route_vpc_to_vpc:
-        dst_vpc_cidr_list:
-        - cidr: 10.70.82.0/24
-          dest: cicd_vpc_gitlab
-        - cidr: 10.70.83.0/24
-          dest: cicd_vpc_eks
-        - cidr: 10.70.84.0/24
-          dest: cicd_vpc_nexus
-        - cidr: 10.70.88.0/24
-          dest: dev_vpc_eks
-        - cidr: 10.70.89.0/24
-          dest: dev_vpc_backbase
-        - cidr: 10.70.91.0/24
-          dest: dev_vpc_crm
-        - cidr: 10.70.90.0/24
-          dest: dev_vpc_matomo
-        - cidr: 10.70.93.0/24
-          dest: dev_vpc_softwareag
-        - cidr: 10.70.92.0/24
-          dest: dev_vpc_temenos
-        - cidr: 10.70.94.0/24
-          dest: dev_vpc_meniga
-        - cidr: 10.70.112.0/24
-          dest: sit_vpc_eks
-        - cidr: 10.70.113.0/24
-          dest: sit_vpc_backbase
-        - cidr: 10.70.115.0/24
-          dest: sit_vpc_crm
-        - cidr: 10.70.114.0/24
-          dest: sit_vpc_matomo
-        - cidr: 10.70.117.0/24
-          dest: sit_vpc_softwareag
-        - cidr: 10.70.116.0/24
-          dest: sit_vpc_temenos
-        - cidr: 10.70.118.0/24
-          dest: sit_vpc_meniga
-        repo: git::https://github.com/vmulasmob/terraform_modules.git//route_vpc_to_vpc?ref=v0.3
-        tags:
-          InfraRepo: https://github.com/vmulasmob/blueprint-networking
-          ManagedBy: kib-devops@mobiquityinc.com
-          Name: route-vpc-to-vpc
-          Organization: KIB
-          Terraform: 'true'
-        transit_gateway_id: tgw-0c42f01d32435e67f
+
       transit_gateway_attachment:
-        repo: git::https://github.com/vmulasmob/terraform_modules.git//transit_gateway_attachment?ref=v0.3
+        repo: git::https://github.com/mob/terraform_modules.git//transit_gateway_attachment?ref=v0.3
+        allowed_envs: *allowed_envs
+        allowed_regions: *allowed_regions
         tags:
-          InfraRepo: https://github.com/vmulasmob/blueprint-networking
-          ManagedBy: kib-devops@mobiquityinc.com
+          InfraRepo: https://github.com/mob/blueprint-networking
+          ManagedBy: hello@it.com
           Name: tg-attachment
-          Organization: KIB
+          Organization: MOB
           Terraform: 'true'
-        transit_gateway_id: tgw-0c42f01d32435e67f
-      vpc_endpoint:
-        name: vpc-ep
-        repo: git::https://github.com/clowdhaus/terraform-aws-vpc-endpoints.git//?ref=v1.1.0
-        tags:
-          InfraRepo: https://github.com/vmulasmob/blueprint-networking
-          ManagedBy: kib-devops@mobiquityinc.com
-          Name: vpc-ep
-          Organization: KIB
-          Terraform: 'true'
+        transit_gateway_id: tgw-01234567aef
