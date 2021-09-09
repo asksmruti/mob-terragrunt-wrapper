@@ -256,7 +256,7 @@ def main():
     terraform_args = options.args.split(' ')
     if options.verbosity != 0:
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s: %(message)s')
-        terraform_args = "--terragrunt-log-level debug --terragrunt-debug"
+        os.environ["TF_LOG"]="DEBUG"
     else:
         logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
