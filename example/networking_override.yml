@@ -1,5 +1,5 @@
-{% set tf_module_git_url = 'git::https://github.com/vmulasmob/terraform_modules.git' %}
-{% set transit_gateway = 'tgw-0c42f01d32435e67f' %}
+{% set tf_module_git_url = 'git::https://github.com/mob/terraform_modules.git' %}
+{% set transit_gateway = 'tgw-01234567aef' %}
 
 env_settings:
   terragrunt_modules_settings: &settings
@@ -7,7 +7,7 @@ env_settings:
 
       vpc_squid:
         {% set tag_prefix = 'vpc-squid' %}
-        {% set cidr = "10.70.87.0/24" %}
+        {% set cidr = "10.20.80.0/24" %}
 
           networking:
             default_vpc_name: "{{ tag_prefix }}"
@@ -38,133 +38,6 @@ env_settings:
             transit_gateway_id: "{{ transit_gateway }}"
             tags:
               Name: "{{ tag_prefix }}"
-
-          route_vpc_to_vpc:
-            {% set tag_prefix = 'route-vpc-to-vpc' %}
-            transit_gateway_id: "{{ transit_gateway }}"
-            dst_vpc_cidr_list:
-              #### CICD
-              - dest: "cicd_vpc_gitlab"
-                cidr: "10.70.82.0/24"
-              - dest: "cicd_vpc_eks"
-                cidr: "10.70.83.0/24"
-              - dest: "cicd_vpc_nexus"
-                cidr: "10.70.84.0/24"
-                #### DEV
-              - dest: "dev_vpc_eks"
-                cidr: "10.70.88.0/24"
-              - dest: "dev_vpc_backbase"
-                cidr: "10.70.89.0/24"
-              - dest: "dev_vpc_crm"
-                cidr: "10.70.91.0/24"
-              - dest: "dev_vpc_matomo"
-                cidr: "10.70.90.0/24"
-              - dest: "dev_vpc_softwareag"
-                cidr: "10.70.93.0/24"
-              - dest: "dev_vpc_temenos"
-                cidr: "10.70.92.0/24"
-              - dest: "dev_vpc_meniga"
-                cidr: "10.70.94.0/24"
-                #### SIT
-              - dest: "sit_vpc_eks"
-                cidr: "10.70.112.0/24"
-              - dest: "sit_vpc_backbase"
-                cidr: "10.70.113.0/24"
-              - dest: "sit_vpc_crm"
-                cidr: "10.70.115.0/24"
-              - dest: "sit_vpc_matomo"
-                cidr: "10.70.114.0/24"
-              - dest: "sit_vpc_softwareag"
-                cidr: "10.70.117.0/24"
-              - dest: "sit_vpc_temenos"
-                cidr: "10.70.116.0/24"
-              - dest: "sit_vpc_meniga"
-                cidr: "10.70.118.0/24"
-            tags:
-              Name: "{{ tag_prefix }}"
-
-          asg:
-            {% set tag_prefix = 'squid-asg' %}
-            name: {{ tag_prefix }}
-            max_size: 2
-            min_size: 1
-            desired_capacity: 1
-            block_device_mappings:
-              - device_name: "/dev/xvda"
-                ebs:
-                  - delete_on_termination: true
-                    encrypted: true
-                    volume_size: 20
-                    volume_type: "gp3"
-                no_device: 0
-              - device_name: "/dev/sda1"
-                ebs:
-                  - delete_on_termination: true
-                    encrypted: true
-                    volume_size: 30
-                    volume_type: "gp3"
-                no_device: 1
-            capacity_reservation_specification:
-              capacity_reservation_preference: "open"
-            cpu_options:
-              core_count: 1
-              threads_per_core: 1
-            create_lt: true
-            description: "squid - Launch template"
-            ebs_optimized: true
-            enable_monitoring: true
-            health_check_type: "EC2"
-            key_name: "kib-networking"
-            initial_lifecycle_hooks:
-              - default_result: CONTINUE
-                heartbeat_timeout: 60
-                lifecycle_transition: "autoscaling:EC2_INSTANCE_LAUNCHING"
-                name: "StartupLifeCycleHook"
-              - default_result: CONTINUE
-                heartbeat_timeout: 180
-                lifecycle_transition: "autoscaling:EC2_INSTANCE_TERMINATING"
-                name: "TerminationLifeCycleHook"
-            instance_refresh:
-              preferences:
-                min_healthy_percentage: 50
-              strategy: "Rolling"
-            lt_name: "squid-launch-template"
-            update_default_version: true
-            use_lt: true
-            wait_for_capacity_timeout: 0
-            tags:
-              - Name: "{{ tag_prefix }}"
-
-          vpc_endpoint:
-            {% set tag_prefix = 'vpc-ep' %}
-            name: "vpc-ep"
-            tags:
-              Name: "{{ tag_prefix }}"
-
-          asg_sec_group:
-            {% set tag_prefix = 'asg-sec-group' %}
-            create: true
-            name: {{ tag_prefix }}
-            tags:
-              Name: "asg sg squid"
-
-          elbv2:
-            {% set tag_prefix = 'LbSquid' %}
-            load_balancer_type: "network"
-            enable_cross_zone_load_balancing: true
-            internal: true
-            name: {{ tag_prefix }}
-            tags:
-              Name: "lb squid"
-
-          ad:
-            {% set tag_prefix = 'Active Directory' %}
-            computer_ou: "kib"
-            domain_name: "non-prod.kib.local"
-            short_name: "kib"
-            tags:
-              Name: "Active Directory"
-
   regions:
     eu-west-1:
       <<: *settings
