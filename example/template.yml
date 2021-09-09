@@ -10,8 +10,8 @@ common_vars:
 common_tags: &common_tags
   Organization: "KIB"
   Terraform: "true"
-  InfraRepo: "https://github.com/vmulasmob/blueprint-networking"
-  ManagedBy: "kib-devops@mobiquityinc.com"
+  InfraRepo: "https://github.com/mob/blueprint-networking"
+  ManagedBy: "hello@it.com"
 
 
 terragrunt_modules_settings:
