@@ -1,11 +1,11 @@
-name: PIP upload - tgwrapper
+name: Build | Publish
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  publish:
+  ci:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
